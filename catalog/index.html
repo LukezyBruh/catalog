@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Каталог Садовода</h1>
+<div class="block" id="filters">
+    <div class="price"><h2>Цена</h2>
+        <input class="input-text" type="text" id="price_min" value="0">-
+        <input class="input-text" type="text" id="price_max" value="11000"><br>
+    </div>
+    <h2>Цвет</h2>
+    <select id="color" name="name">
+        <option value="no_value">--Выберите цвет--</option>
+        <option value="white">white </option>
+        <option value="black">black </option>
+        <option value="pink">pink </option>
+        <option value="blue">blue </option>
+        <option value="light blue">light blue </option>
+        <option value="purple">purple </option>
+        <option value="light purple">light purple </option>
+        <option value="yellow">yellow</option>
+        <option value="green"> green </option>
+        <option value="red">red</option>
+        <option value="brown">brown</option>
+
+    </select> <br>
+
+    <button id="submit" type="submit">Применить</button>
+</div>
+
+<script>
+let products = [
+    {title: 'Штаны женские Lilly Bennet', price: 4999, size: '44', color: 'black', image: '<img src="img/1.png">',},
+    {title: 'Штаны женские Abricot', price: 3350, size: '42', color: 'blue', image: '<img  src="img/2.png">',},
+    {title: 'Джинсы Befree', price: 3299, size: '46', color: 'light blue', image: '<img  src="img/3.png">',},
+    {title: 'Джинсы Ostin', price: 3300, size: '44', color: 'purple', image: '<img src="img/4.png">',},
+    {title: 'Джинсы Zarina', price: 1000, size: '44', color: 'yellow', image: '<img src="img/5.png">',},
+    {title: 'Джинсы Befree', price: 2469, size: '44', color: 'green', image: '<img src="img/6.png">',},
+    {title: 'Джинсы Goldrai', price: 7999, size: '44', color: 'red ', image: '<img src="img/7.png">',},
+    {title: 'Джинсы Kappa', price: 3900, size: '46', color: 'light purple', image: '<img src="img/8.png">',},
+    {title: 'Джинсы TopTop', price: 10300, size: '44', color: 'pink', image: '<img src="img/9.png">',},
+    {title: 'Джинсы Celtek', price: 1660, size: '44', color: 'brown', image: '<img src="img/10.png">',},
+]
+
+for (i = 0; i < products.length; i++)
+{
+    let div = document.createElement('div');
+    div.className = "product_container";
+    
+    div.innerHTML = 
+    products[i].image + '<br>'
+    + '<p class="title">' + products[i].title + '</p><br>'
+    + products[i].price + ' руб. <br> Размер: '
+    + products[i].size + '<br> Цвет: '
+    + products[i].color;
+    
+    document.body.append(div);
+} 
+
+submit.onclick = function () {
+    let old_products = Array.from(document.getElementsByClassName("product_container"));
+    for (i = 0; i < old_products.length; i++) {
+        old_products[i].remove();
+    }
+
+    let price_min = document.getElementById('price_min');
+    let price_max = document.getElementById('price_max');
+
+    var sel = document.getElementById("color");
+    var val = sel.options[sel.selectedIndex].value;
+    console.log(val);
+    if(val == 'no_value') {
+        var data = products.filter(
+            element => element.price <= price_max.value && element.price >= price_min.value 
+        );
+        
+    }
+    else {
+        var data = products.filter(
+            element => element.price <= price_max.value && element.price >= price_min.value && element.color == val
+        );
+    }
+    for (i = 0; i < data.length; i++)
+    {
+        let div = document.createElement('div');
+        div.className = "block product_container";
+        
+        div.innerHTML = 
+        data[i].image + '<br>'
+        + '<p class="title">' + data[i].title + '</p><br>'
+        + data[i].price + ' руб. <br> Размер: '
+        + data[i].size + '<br> Цвет: '
+        + data[i].color;
+        
+        document.body.append(div);
+    } 
+}
+</script>
+</body>
+</html>
